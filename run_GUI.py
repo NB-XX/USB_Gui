@@ -1,4 +1,5 @@
 import os
+import sys
 from PySide6.QtWidgets import (
     QStackedWidget,
     QApplication,
@@ -11,10 +12,9 @@ from PySide6.QtWidgets import (
     QToolBar,
 )
 from PySide6.QtGui import QAction, QIcon
-import sys
+
 from KeyboardDecrypt import KeyboardDecryptWindow
 from MouseDecrypt import MouseDecryptWindow
-from ctypes import windll
 
 
 class MainWindow(QMainWindow):
@@ -43,8 +43,6 @@ class MainWindow(QMainWindow):
         self.typeToolBar.addAction(self.mouseAction)
         self.addToolBar(self.typeToolBar)
 
-        # 文件选择功能
-
         self.fileToolBar = QToolBar(self)
         self.select_file_label = QLabel("选择或拖拽文件")
         self.fileToolBar.addWidget(self.select_file_label)
@@ -65,16 +63,14 @@ class MainWindow(QMainWindow):
             QPushButton {background-color: transparent}
             QTextEdit {background-color: rgba(255, 255, 255, 200)}
             QLineEdit {background-color: rgba(255, 255, 255, 200)}
-        """
+            """
         )
-        windll.shell32.SetCurrentProcessExplicitAppUserModelID("myappid")
 
         centralWidget = QWidget(self)
         centralWidget.setLayout(layout)
 
         self.setCentralWidget(centralWidget)
 
-        # 设置窗口大小
         self.resize(600, 450)
 
     def switch_window(self, index):
@@ -108,8 +104,6 @@ else:
 os.chdir(base_path)
 
 app = QApplication(sys.argv)
-
 window = MainWindow()
 window.show()
-
 app.exec()
